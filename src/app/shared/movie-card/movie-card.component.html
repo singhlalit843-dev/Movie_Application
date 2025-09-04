@@ -1,0 +1,9 @@
+<div class="card" (click)="open()">
+  <img [src]="tmdb.imageUrl(movie.poster_path,'w300')" [alt]="movie.title" class="poster"/>
+  <div class="meta">
+    <h3 class="title">{{ movie.title }}</h3>
+    <p class="year">{{ movie.release_date | year }}</p>
+    <div class="rating">★ {{ movie.vote_average || '—' }}</div>
+    <button (click)="toggle($event)">{{ watchlist.has(movie.id) ? 'Remove' : 'Watchlist' }}</button>
+  </div>
+</div>

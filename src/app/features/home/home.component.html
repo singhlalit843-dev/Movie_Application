@@ -1,0 +1,19 @@
+<h2>Landing — pick a mood</h2>
+<div class="moods">
+  <button (click)="load('feel-good')">Feel Good</button>
+  <button (click)="load('action')">Action</button>
+  <button (click)="load('mind-benders')">Mind Benders</button>
+</div>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="!loading && movies.length === 0">No movies yet — pick a mood</div>
+
+<div
+  style="
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  "
+>
+  <app-movie-card *ngFor="let m of movies" [movie]="m"></app-movie-card>
+</div>
