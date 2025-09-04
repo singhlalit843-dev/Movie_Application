@@ -10,6 +10,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  title:string="Movie_Application";
   goHome() {
     location.href = '/';
   }

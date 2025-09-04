@@ -36,7 +36,7 @@ export class MovieCardComponent implements OnInit {
     this.router.navigate(['/movie', this.movie.id]);
   }
 
-  toggleWatchlist(event: Event) {
+  toggleWatchlist(event: any) {
     event.stopPropagation(); // prevent navigation
     this.watchlist.toggle(this.movie);
     this.isInWatchlist = !this.isInWatchlist;
