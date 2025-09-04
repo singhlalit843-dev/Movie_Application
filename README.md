@@ -1,6 +1,37 @@
-# MovieApplication
+# 🎬 What Should I Watch Tonight?
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.20.
+An Angular 18 + TailwindCSS application that helps you discover movies based on your mood, search for films and actors, and view detailed information such as trailers, cast, and similar suggestions.
+
+---
+
+## ✨ Features
+- Mood-based discovery (e.g., *Feel Good*, *Action Fix*, *Mind Benders*)
+- Search movies & actors with clear separation of results
+- Movie detail view with:
+  - Poster, title, release year, rating, overview
+  - Trailer (YouTube embed)
+  - Cast list with actors
+  - Similar movie suggestions
+- Responsive design (desktop, tablet, mobile)
+- Global loader for all API requests
+- Watchlist management (bonus feature)
+
+---
+
+## 🛠️ Tech Stack
+- [Angular 18](https://angular.io/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [TMDB API](https://developers.themoviedb.org/3)
+
+---
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/singhlalit843-dev/Movie_Application.git
+cd Movie_Application
+
+
+
 
 ## Development server
 

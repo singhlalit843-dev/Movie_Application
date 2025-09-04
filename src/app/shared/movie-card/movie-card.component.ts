@@ -1,33 +1,44 @@
-import { Component, Input, Pipe } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  OnInit,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { Movie } from '../../core/models/movie';
 import { TmdbService } from '../../core/services/tmdb.service';
 import { WatchlistService } from '../../core/services/watchlist.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { YearPipe } from '../pipes/year.pipe';
 
 @Component({
   selector: 'app-movie-card',
   standalone: true,
-  imports: [CommonModule,YearPipe],
   templateUrl: './movie-card.component.html',
-  styleUrl: './movie-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule, YearPipe],
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   @Input() movie!: Movie;
+  isInWatchlist = false;
 
   constructor(
     public tmdb: TmdbService,
-    public watchlist: WatchlistService,
-    private router: Router
+    private router: Router,
+    private watchlist: WatchlistService
   ) {}
+
+  ngOnInit() {
+    this.isInWatchlist = this.watchlist.isSaved(this.movie.id);
+  }
 
   open() {
     this.router.navigate(['/movie', this.movie.id]);
   }
 
-  toggle(e: Event) {
-    e.stopPropagation();
-    this.watchlist.toggle(this.movie.id);
+  toggleWatchlist(event: Event) {
+    event.stopPropagation(); // prevent navigation
+    this.watchlist.toggle(this.movie);
+    this.isInWatchlist = !this.isInWatchlist;
   }
 }

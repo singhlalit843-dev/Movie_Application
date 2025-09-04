@@ -1,33 +1,43 @@
-import { Injectable } from '@angular/core';
-const KEY = 'watchlist';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Movie } from '../models/movie';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class WatchlistService {
-  private _ids: number[] = this.load();
-  constructor() {}
-  private load(): number[] {
-    try {
-      return JSON.parse(localStorage.getItem(KEY) || '[]');
-    } catch {
-      return [];
-    }
-  }
-  private save(v: number[]) {
-    localStorage.setItem(KEY, JSON.stringify(v));
+  private storageKey = 'watchlist';
+  private isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
   }
 
-  toggle(id: number) {
-    const idx = this._ids.indexOf(id);
-    if (idx >= 0) this._ids.splice(idx, 1);
-    else this._ids.push(id);
-    this.save(this._ids);
+  private get list(): Movie[] {
+    if (!this.isBrowser) return [];
+    const stored = localStorage.getItem(this.storageKey);
+    return stored ? JSON.parse(stored) : [];
   }
-  has(id: number) {
-    return this._ids.indexOf(id) >= 0;
+
+  private save(list: Movie[]) {
+    if (!this.isBrowser) return;
+    localStorage.setItem(this.storageKey, JSON.stringify(list));
   }
-  all() {
-    return [...this._ids];
+
+  getAll(): Movie[] {
+    return this.list;
+  }
+
+  isSaved(id: number): boolean {
+    return this.list.some((m) => m.id === id);
+  }
+
+  toggle(movie: Movie) {
+    if (!this.isBrowser) return;
+    let current = this.list;
+    if (this.isSaved(movie.id)) {
+      current = current.filter((m) => m.id !== movie.id);
+    } else {
+      current.push(movie);
+    }
+    this.save(current);
   }
 }

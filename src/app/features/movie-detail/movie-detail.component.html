@@ -1,1 +1,88 @@
-<p>movie-detail works!</p>
+<div class="max-w-6xl mx-auto px-4 py-10" *ngIf="movie">
+  <div class="flex flex-col md:flex-row gap-8">
+    <!-- Poster -->
+    <img
+      [src]="tmdb.imageUrl(movie.poster_path, 'w500')"
+      alt="{{ movie.title }}"
+      class="w-full md:w-72 rounded-2xl shadow-lg object-cover"
+      loading="lazy"
+    />
+
+    <!-- Info -->
+    <div class="flex-1">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        {{ movie.title }}
+        <span class="text-gray-500 text-xl"
+          >({{ movie.release_date | year }})</span
+        >
+      </h1>
+
+      <p class="text-gray-700 mb-4">{{ movie.overview }}</p>
+
+      <div class="flex items-center gap-6 text-gray-700 mb-4">
+        <span class="flex items-center gap-1"
+          >⭐
+          <span class="font-semibold">{{
+            movie.vote_average | number : "1.1-1"
+          }}</span></span
+        >
+        <span>⏱ {{ movie.runtime }} min</span>
+      </div>
+
+      <div *ngIf="movie.genres?.length" class="flex flex-wrap gap-2">
+        <span
+          *ngFor="let g of movie.genres"
+          class="bg-indigo-100 text-indigo-700 text-sm px-3 py-1 rounded-full"
+        >
+          {{ g.name }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trailer -->
+  <div *ngIf="trailerUrl" class="mt-10">
+    <h2 class="text-2xl font-semibold mb-4">🎥 Trailer</h2>
+    <div class="aspect-video rounded-xl overflow-hidden shadow-lg">
+      <iframe
+        class="w-full h-full"
+        [src]="trailerUrl"
+        frameborder="0"
+        allowfullscreen
+      >
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Cast -->
+  <div *ngIf="movie.credits?.cast?.length" class="mt-10">
+    <h2 class="text-2xl font-semibold mb-4">🎭 Cast</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+      <div
+        *ngFor="let c of movie.credits.cast.slice(0, 10)"
+        class="text-center"
+      >
+        <img
+          [src]="tmdb.imageUrl(c.profile_path, 'w200')"
+          alt="{{ c.name }}"
+          class="w-28 h-36 mx-auto rounded-xl object-cover shadow"
+        />
+        <div class="mt-2 font-medium text-gray-800 truncate">{{ c.name }}</div>
+        <div class="text-sm text-gray-500 truncate">{{ c.character }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Similar Movies -->
+  <div *ngIf="movie.similar?.results?.length" class="mt-10">
+    <h2 class="text-2xl font-semibold mb-4">📺 Similar Movies</h2>
+    <div
+      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      <app-movie-card
+        *ngFor="let s of movie.similar.results"
+        [movie]="s"
+      ></app-movie-card>
+    </div>
+  </div>
+</div>

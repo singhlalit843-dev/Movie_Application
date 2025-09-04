@@ -1,15 +1,14 @@
- <div class="app">
-    <header class="header">
-      <h1 (click)="goHome()" style="cursor:pointer">What Should I Watch Tonight</h1>
-      <nav>
-        <a routerLink="/">Home</a> |
-        <a [routerLink]="[{ outlets: { primary: [''], sidebar: ['search'] } }]">Search</a> |
-        <a routerLink="/watchlist">Watchlist</a>
-      </nav>
-    </header>
-    <main style="padding:16px">
-      <router-outlet></router-outlet>
-      <router-outlet name="sidebar"></router-outlet> <!-- named outlet -->
+<app-loader></app-loader>
 
-    </main>
-  </div>
+<!-- Main content -->
+<header class="header">
+  <h1 routerLink="/" class="cursor-pointer">What Should I Watch Tonight</h1>
+  <nav>
+    <a routerLink="/">Home</a> | <a routerLink="/search">Search</a> |
+    <a routerLink="/watchlist">Watchlist</a>
+  </nav>
+</header>
+
+<main class="p-6">
+  <router-outlet></router-outlet>
+</main>

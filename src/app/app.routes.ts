@@ -6,7 +6,7 @@ import { WatchlistComponent } from './features/watchlist/watchlist.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'search', component: SearchPageComponent,outlet:"sidebar" },
+  { path: 'search', component: SearchPageComponent },
   { path: 'movie/:id', component: MovieDetailComponent },
   { path: 'watchlist', component: WatchlistComponent },
   { path: '**', redirectTo: '' },
