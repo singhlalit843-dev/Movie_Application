@@ -27,7 +27,7 @@ jobs:
 
       # 4. Run unit tests
       - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: ng test --code-coverage
 
       # 5. Build Angular app
       - name: Build project
