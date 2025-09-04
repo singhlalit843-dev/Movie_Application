@@ -27,11 +27,11 @@ jobs:
 
       # 4. Run unit tests
       - name: Run tests
-        run: ng test --code-coverage
+        run: npx ng test --code-coverage
 
       # 5. Build Angular app
       - name: Build project
-        run: ng build --configuration production --base-href "/Movie_Application/"
+        run: npx ng build --configuration production --base-href "/Movie_Application/"
 
       # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
